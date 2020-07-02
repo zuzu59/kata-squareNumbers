@@ -1,9 +1,9 @@
 <?php
 // version plus propre sans le code de debug
 //utilisation https://codebunk.com/b/4981100120290/
-//zf200702.1835
+//zf200702.1843
 
-$size = 19;
+$size = 6;
 $x = $size;
 $y = 0;
 $incx = -1;
@@ -41,7 +41,7 @@ function printTableau($tableau)
 // fonction de la tortue
 function tortue($tab)
 {
-    global $x, $y, $incx, $incy, $size, $compteur , $tab;
+    global $x, $y, $x2, $y2, $incx, $incy, $size, $compteur , $tab;
     while ($compteur >= 1 && $x >-10) {
         if ($compteur < 8) {
         }
@@ -55,23 +55,11 @@ function tortue($tab)
         if (($x < 0) || ($y < 0) || ($x > $size-1) || ($y > $size-1)) {
             //si oui elle tourne à gauche
             tourner();
-            // on revient où on était
-            $x = $x2;
-            $y = $y2;
-            //la tortue avance d'un pas
-            $x = $x+$incx;
-            $y = $y+$incy;
         }
         //la tortue vérifie si la case est pleine
         if ($tab[$y][$x] > '0') {
             //si oui elle tourne à gauche
             tourner();
-            // on revient où on était
-            $x = $x2;
-            $y = $y2;
-            //la tortue avance d'un pas
-            $x = $x+$incx;
-            $y = $y+$incy;
         }
         //elle dépose un oeuf (le numéro de compteur (chiffre))
         $tab[$y][$x] = $compteur;
@@ -84,31 +72,30 @@ function tortue($tab)
 // fontction tourner à gauche
 function tourner()
 {
-    global $x, $y, $incx, $incy, $size, $compteur;
+    global $x, $y, $x2, $y2, $incx, $incy, $size, $compteur , $tab;
     //si on va à gauche -> descend
     if ($incx==-1 && $incy==0) {
         $incx=0;
         $incy=1;
-        return;
-    }
     //si on descend -> va à droite
-    if ($incx==0 && $incy==1) {
+    } elseif ($incx==0 && $incy==1) {
         $incx=1;
         $incy=0;
-        return;
-    }
     //si on va à droite - > monte
-    if ($incx==1 && $incy==0) {
+    } elseif ($incx==1 && $incy==0) {
         $incx=0;
         $incy=-1;
-        return;
-    }
     //si on monte -> va à gauche
-    if ($incx==0 && $incy==-1) {
+    } elseif ($incx==0 && $incy==-1) {
         $incx=-1;
         $incy=0;
-        return;
     }
+    // on revient où on était
+    $x = $x2;
+    $y = $y2;
+    //la tortue avance d'un pas
+    $x = $x+$incx;
+    $y = $y+$incy;
 }
 
 print "Tableau de $size x $size\n\n";
@@ -116,3 +103,5 @@ $tab = initTableau($size);
 tortue($tab);
 print "Le tableau terminé:\n";
 printTableau($tab);
+
+
